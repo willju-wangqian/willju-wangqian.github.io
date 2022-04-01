@@ -1,12 +1,34 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>A Hugo website</title>
+    <title>Wangqian Ju&#39;s website</title>
     <link>/</link>
-    <description>Recent content on A Hugo website</description>
+    <description>Recent content on Wangqian Ju&#39;s website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 01 Dec 2020 21:13:14 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Thu, 31 Mar 2022 20:26:51 -0600</pubDate>
+      
+      <guid>/about/</guid>
+      <description>My name is Wangqian (Will) Ju, a Ph.D. student in Statistics at Iowa State University, supervised by Dr. Heike Hofmann, and a graduate research assistant at the Center for Statistics and Applications in Forensic Evidence (CSAFE). I received my Bachelor&amp;rsquo;s degree in Statistics from University of California, Davis and my Master&amp;rsquo;s degree in Statistics from Iowa State University.
+Research Interest:   Computational statistics
+  Graphics and visualization
+  Forensic statistics</description>
+    </item>
+    
+    <item>
+      <title>Resume / CV</title>
+      <link>/resume/</link>
+      <pubDate>Thu, 31 Mar 2022 20:26:51 -0600</pubDate>
+      
+      <guid>/resume/</guid>
+      <description>Resume (2022) Resume
+CV (2022) CV</description>
+    </item>
+    
     <item>
       <title>Hello R Markdown</title>
       <link>/2020/12/01/hello-r-markdown/</link>
