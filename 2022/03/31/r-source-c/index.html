@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.94.2" />
+
+
+<title>Include C code in R - Wangqian Ju&#39;s website</title>
+<meta property="og:title" content="Include C code in R - Wangqian Ju&#39;s website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/profile_cat.jpg"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/willju-wangqian">GitHub</a></li>
+    
+    <li><a href="/resume/">Resume/CV</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">3 min read</span>
+    
+
+    <h1 class="article-title">Include C code in R</h1>
+
+    
+    <span class="article-date">2022-03-31</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2022/03/31/r-source-c/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="intro" class="section level2">
+<h2>Intro</h2>
+<p>This is a short summary of how to add <code>C</code> source code into an <code>R</code> package. I wrote this a year ago as a course material summary (<a href="https://catalog.iastate.edu/search/?P=STAT%20580">STAT 580</a>) and believed that I would remember all the basic details forever. Obviously, I was wrong. So I’m not 100 percent sure about the following contents and can only hope that this is still helpful to, I don’t know, at least myself in the future :) Enjoy!</p>
+<p>Assume we already have an <code>R</code> package called <code>tinyCRexample</code> that is working and willing to be added some <code>C</code> source code. There are four things that we need to pay attention to:</p>
+<ul>
+<li><code>tinyCRexample/src</code>: we need to create this new folder. It holds all <code>C</code> source code, an initialization file <code>init.c</code>, and <code>Makevars</code> and <code>Makevars.win</code></li>
+<li><code>tinyCRexample/inst/include</code>: we need to create this new folder (if you don’t have previously). It holds header files <code>tinyCRexample.h</code> and <code>tinyCRexampleAPI.h</code></li>
+<li><code>tinyCRexample/R</code> we should already have this folder. We need to add some <code>R</code> scripts holding wrappers of our <code>.Call()</code> or <code>.c()</code> functions</li>
+<li><code>tinyCRexample/NAMESPACE</code> we should already have this, too. If we use <code>roxygen2</code> it should be generated automatically.</li>
+</ul>
+</div>
+<div id="src" class="section level2">
+<h2>src</h2>
+<ul>
+<li><p>Include all <code>.c</code> files here, and do not include any <code>.o</code> or <code>.so</code> or <code>.dll</code> files.</p></li>
+<li><p>Create an initialization file <code>init.c</code></p></li>
+</ul>
+<p>An example of <code>init.c</code></p>
+<pre class="c"><code>#include &quot;tinyCRexample.h&quot;
+#include &lt;Rconfig.h&gt;
+#include &lt;Rinternals.h&gt;
+#include &lt;R_ext/Rdynload.h&gt;
+
+static const
+R_CallMethodDef callMethods[] = {
+        {&quot;add&quot;,                 (DL_FUNC) &amp;add_,                 2},
+        {&quot;compute_cross_corr&quot;,  (DL_FUNC) &amp;COMPUTE_CROSS_CORR_,  3}, 
+        {&quot;na_trim_cmps&quot;,        (DL_FUNC) &amp;NA_TRIM_,             1},
+        {&quot;local_max_cmps&quot;,      (DL_FUNC) &amp;LOCAL_MAX_,           2},
+        {NULL,                   NULL,                           0}
+};
+
+void R_init_CMPS(DllInfo *info)
+{
+  R_registerRoutines(info,
+                     NULL,
+                     callMethods,
+                     NULL,
+                     NULL);
+
+  R_useDynamicSymbols(info, TRUE);
+
+  /* used by external packages linking to internal xxx code from C */
+  R_RegisterCCallable(&quot;CMPS&quot;,&quot;add&quot;,                     (DL_FUNC) &amp;add_);
+  R_RegisterCCallable(&quot;CMPS&quot;,&quot;compute_cross_corr&quot;,      (DL_FUNC) &amp;COMPUTE_CROSS_CORR_);
+  R_RegisterCCallable(&quot;CMPS&quot;,&quot;na_trim_cmps&quot;,            (DL_FUNC) &amp;NA_TRIM_);
+  R_RegisterCCallable(&quot;CMPS&quot;,&quot;local_max_cmps&quot;,          (DL_FUNC) &amp;LOCAL_MAX_);
+  
+}</code></pre>
+<p>[TODO] Some explanation</p>
+<p>Note that <code>#include "tinyCRexample.h"</code> is only needed for <code>init.c</code>.</p>
+<ul>
+<li><code>Makevars</code> and <code>Makevars.win</code> are used to set compile flags. The minimum we would need is</li>
+</ul>
+<pre class="c"><code>// Makevars
+PKG_CPPFLAGS = -I../inst/include</code></pre>
+<pre class="c"><code>// Makevars.win
+PKG_CPPFLAGS = -I../inst/include</code></pre>
+</div>
+<div id="instinclude" class="section level2">
+<h2>inst/include</h2>
+<ul>
+<li><code>tinyCRexample.h</code></li>
+</ul>
+<pre class="c"><code>#include &lt;R.h&gt;
+#include &lt;Rinternals.h&gt;
+
+SEXP add_(SEXP x_, SEXP y_);
+SEXP COMPUTE_CROSS_CORR_(SEXP xx_in, SEXP yy_in, SEXP minoverlap_in);
+SEXP NA_TRIM_(SEXP seq_in);
+SEXP LOCAL_MAX_(SEXP seq_in, SEXP MAX_MIN_in);</code></pre>
+<ul>
+<li><code>tinyCRexampleAPI.h</code></li>
+</ul>
+<pre class="c"><code>#include &lt;tinyCRexample.h&gt;
+
+#include &lt;R_ext/Rdynload.h&gt;
+#include &lt;R.h&gt;
+#include &lt;Rinternals.h&gt;
+
+SEXP add_(SEXP x, SEXP y) {
+  static SEXP(*fun)(SEXP, SEXP) = NULL;
+  if (fun == NULL)
+    fun = (SEXP(*)(SEXP, SEXP)) R_GetCCallable(&quot;CMPS&quot;, &quot;add&quot;);
+  return fun(x, y);
+}
+
+SEXP COMPUTE_CROSS_CORR_(SEXP xx_in, SEXP yy_in, SEXP minoverlap_in) {
+  static SEXP(*fun)(SEXP, SEXP, SEXP) = NULL;
+  if (fun == NULL)
+    fun = (SEXP(*)(SEXP, SEXP, SEXP)) R_GetCCallable(&quot;CMPS&quot;, &quot;compute_cross_corr&quot;);
+  return fun(xx_in, yy_in, minoverlap_in);
+}
+
+SEXP _NA_TRIM(SEXP seq_in) {
+  static SEXP(*fun)(SEXP) = NULL;
+  if (fun == NULL)
+    fun = (SEXP(*)(SEXP)) R_GetCCallable(&quot;CMPS&quot;, &quot;na_trim_cmps&quot;);
+  return fun(seq_in);  
+}
+
+SEXP LOCAL_MAX_(SEXP seq_in, SEXP MAX_MIN_in) {
+  static SEXP(*fun)(SEXP, SEXP) = NULL;
+  if (fun == NULL)
+    fun = (SEXP(*)(SEXP, SEXP)) R_GetCCallable(&quot;CMPS&quot;, &quot;local_max_cmps&quot;);
+  return fun(seq_in, MAX_MIN_in);  
+}</code></pre>
+<p>[TODO] Provide package API of exportable functions (main idea: others can include this API header file and use these exported functions )</p>
+</div>
+<div id="tinycrexampler" class="section level2">
+<h2>tinyCRexample/R</h2>
+<p>Create wrapper functions and include them in the <code>R</code> folder</p>
+<p>Note that we used <code>roxygen2</code>, it will automatically edit <code>NAMESPACE</code>.</p>
+<pre class="r"><code>#&#39; @useDynLib tinyCRexample COMPUTE_CROSS_CORR_
+compute_cross_corr &lt;- function(x, y, min.overlap) .Call(COMPUTE_CROSS_CORR_, x, y, min.overlap)
+
+#&#39; @useDynLib tinyCRexample NA_TRIM_
+na_trim_cmps &lt;- function(x) .Call(NA_TRIM_, x)</code></pre>
+</div>
+<div id="namespace" class="section level2">
+<h2>NAMESPACE</h2>
+<p>If we ever gave a wrong name in <code>#' @useDynLib tinyCRexample COMPUTE_CROSS_CORR_</code>, for example</p>
+<pre class="r"><code>#&#39; @useDynLib ABC COMPUTE_CROSS_CORR_
+compute_cross_corr &lt;- function(x, y, min.overlap) .Call(COMPUTE_CROSS_CORR_, x, y, min.overlap)</code></pre>
+<p>and did a package check, <code>NAMESPACE</code> would be edited and become:</p>
+<pre class="r"><code>useDynLib(ABC,COMPUTE_CROSS_CORR_) # this is wrong
+useDynLib(CMPS,LOCAL_MAX_)
+useDynLib(CMPS,NA_TRIM_)</code></pre>
+<p>Then many errors would pop out since there is no shared library object called <code>ABC</code></p>
+<p>The solution is to delete <code>NAMESPACE</code> and regenerate it by using <code>roxygen2::roxygenise()</code> after we have corrected the package name in <code>#' @useDynLib</code></p>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+
+    
+  </body>
+</html>
+
