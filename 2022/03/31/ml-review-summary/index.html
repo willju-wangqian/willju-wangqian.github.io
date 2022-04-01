@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.94.2" />
+
+
+<title>ML Review Summary - Wangqian Ju&#39;s website</title>
+<meta property="og:title" content="ML Review Summary - Wangqian Ju&#39;s website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/profile_cat.jpg"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/willju-wangqian">GitHub</a></li>
+    
+    <li><a href="/resume/">Resume/CV</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">5 min read</span>
+    
+
+    <h1 class="article-title">ML Review Summary</h1>
+
+    
+    <span class="article-date">2022-03-31</span>
+    
+
+    <div class="article-content">
+      
+<script src="/2022/03/31/ml-review-summary/index_files/header-attrs/header-attrs.js"></script>
+
+
+<div id="logistic-regression" class="section level4">
+<h4>Logistic Regression</h4>
+<ul>
+<li>Assumption
+<ul>
+<li>independent</li>
+<li>no multicollinearity</li>
+<li>binary observation for the dependent variable</li>
+<li>linear relationship between the log of odds and predictors</li>
+</ul></li>
+<li>coefficients
+<ul>
+<li>log odds increases or odds multiplies by <span class="math inline">\(e^\beta\)</span></li>
+</ul></li>
+</ul>
+</div>
+<div id="random-forest" class="section level4">
+<h4>Random Forest</h4>
+<ul>
+<li><a href="https://towardsdatascience.com/understanding-random-forest-58381e0602d2">intro</a></li>
+<li>bagging and OOB:
+<ul>
+<li>bootstrap aggregation: train DTs with bootstrap samples (with replacement), aggregate by the majority vote</li>
+<li><a href="https://towardsdatascience.com/what-is-out-of-bag-oob-score-in-random-forest-a7fa23d710">out of bag</a></li>
+</ul></li>
+<li>“random”
+<ul>
+<li>random rows: <a href="https://towardsdatascience.com/what-is-out-of-bag-oob-score-in-random-forest-a7fa23d710">bagging</a></li>
+<li>random cols: use random features in DTs’ training</li>
+</ul></li>
+<li>diversity: each DT is trained based on different training data and different features
+<ul>
+<li>diverse committee to cast votes</li>
+<li>relatively robust to multicollinearity</li>
+</ul></li>
+<li>split criteria:
+<ul>
+<li><a href="https://towardsdatascience.com/cart-classification-and-regression-trees-for-clean-but-powerful-models-cc89e60b7a85">Gini impurity vs Entropy</a>
+<ul>
+<li>best split: lowest Gini impurity, lowest entropy</li>
+</ul></li>
+<li>Each node can compute this measurement; if the split decreases the measurement, then split.
+<ul>
+<li>the measurement of the parent node is already computed</li>
+<li>the measurement of the child nodes (or the measurement of this split) is the weighted sum of each child node</li>
+</ul></li>
+</ul></li>
+<li>parameters:
+<ul>
+<li>number of trees; max depth; <code>min_samples_leaf</code>; number of features; bootstrap sample size</li>
+</ul></li>
+</ul>
+</div>
+<div id="resampling" class="section level4">
+<h4>Resampling</h4>
+<ul>
+<li>crossvalidation:
+<ul>
+<li>split the data in different ways; for each split, train and validate; aggregate validation results</li>
+<li>hyperparameters: nested crossvalidation
+<ul>
+<li>use cross-validation to determine the hyperparameter, pick the winner to make sure this strategy works, cross-validate this strategy</li>
+</ul></li>
+</ul></li>
+<li><a href="https://en.wikipedia.org/wiki/Resampling_(statistics)">jackknife vs bootstrap</a>
+<ul>
+<li>For the more general jackknife, the delete-m observations jackknife, the bootstrap can be seen as a random approximation of it</li>
+</ul></li>
+</ul>
+</div>
+<div id="missing-data" class="section level4">
+<h4>Missing Data</h4>
+<ul>
+<li><a href="https://medium.com/airbnb-engineering/overcoming-missing-values-in-a-random-forest-classifier-7b1fc1fc03ba">Very interesting one (Airbnb)</a>:
+<ul>
+<li>Naive ways: remove or replace with median/mean for numeric and mode for categorical
+<ul>
+<li>cons: might introduce many gaps and significant structure</li>
+</ul></li>
+<li>suggested: KNN median with a special distance metric and normalizing method
+<ul>
+<li>normalizing features so that both numerical and categorical features are mapped to the interval [0,1]</li>
+<li>how to normalize? conditional CDF given Y = 1</li>
+<li>impute the missing by the median of the K nearest neighbors</li>
+</ul></li>
+</ul></li>
+<li>proximity imputation, on the fly imputation (and other imputation for random forest model), <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC5796790/">link</a> (Paper Tang, 2017)</li>
+<li><a href="https://towardsdatascience.com/how-to-handle-missing-data-8646b18db0d4">A summary</a>
+<ul>
+<li>Delete: lose information</li>
+<li>impute with means/medians, or modes: biased</li>
+<li>Predict: use the non-missings as the training and predict the missing</li>
+<li>KNN: use the information of the neighbors to impute</li>
+<li>Time-series: linear interpolation + seasonal adjustments</li>
+</ul></li>
+</ul>
+</div>
+<div id="imbalanced-data" class="section level4">
+<h4>Imbalanced Data</h4>
+<ul>
+<li><a href="https://www.kdnuggets.com/2017/06/7-techniques-handle-imbalanced-data.html">intro</a></li>
+<li>under- and over-sampling</li>
+<li>ensemble different resampled datasets
+<ul>
+<li>chunk the data of the abundant class into m chunks, combine each chunk with the rare class data to train m models; ensemble m models</li>
+</ul></li>
+<li>each chunk can have a different ratio between the abundant and rare class</li>
+<li>penalizing the wrong classification of the rare class more than wrong classifications of the abundant class</li>
+<li><a href="https://machinelearningmastery.com/smote-oversampling-for-imbalanced-classification/">SMOTE</a>
+<ul>
+<li>randomly selected an instance of the minority class; find its k nearest minority neighbors; randomly select a neighbor; make a (random) convex combination of the neighbor and the instance</li>
+</ul></li>
+</ul>
+<div id="overfitting" class="section level5">
+<h5>Overfitting</h5>
+<ul>
+<li>lower the capacity of the model to memorize the training data, <a href="https://towardsdatascience.com/handling-overfitting-in-deep-learning-models-c760ee047c6e">link</a>
+<ul>
+<li>reduce the number of parameters</li>
+<li>regularization: penalize large weights</li>
+<li>dropout</li>
+</ul></li>
+<li><a href="https://towardsdatascience.com/8-simple-techniques-to-prevent-overfitting-4d443da2ef7d">8 simple techniques</a>
+<ul>
+<li>cross-validation</li>
+<li>data augmentation: increase the sample size</li>
+<li>feature selection: reduce the number of features</li>
+<li>regularization</li>
+</ul></li>
+<li><a href="https://elitedatascience.com/overfitting-in-machine-learning#how-to-detect">ensembling</a>
+<ul>
+<li>bagging: a large number of strong learners (relatively unconstrained) in parallel; then combine</li>
+<li>boosting: weak learners in sequence; learning from the mistakes of the previous one</li>
+</ul></li>
+<li>overfitting, underfitting, bias, variance
+<ul>
+<li><a href="https://www.fireblazeaischool.in/blogs/overfitting-and-underfitting/">link-overfitting and underfitting</a></li>
+<li>underfitting, high bias, low variance, model is too simple</li>
+<li>overfitting, high variance, low bias, model is too complex</li>
+</ul></li>
+</ul>
+</div>
+</div>
+<div id="roc-precision-recall-specificity-sensitivity" class="section level4">
+<h4>ROC, Precision-Recall, Specificity-Sensitivity</h4>
+<ul>
+<li><a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic">link-wiki-roc</a></li>
+<li>AUC: the probability of ranking a randomly chosen positive instance higher than a randomly chosen negative instance <a href="https://people.inf.elte.hu/kiss/11dwhdm/roc.pdf">link-roc</a></li>
+<li>F1 score: harmonic mean of precision and recall
+<ul>
+<li>it penalizes the extreme values</li>
+<li>Accuracy is used when the True Positives and True negatives are more important while F1-score is used when the False Negatives and False Positives are crucial</li>
+<li>Accuracy can be used when the class distribution is similar while F1-score is a better metric when there are imbalanced classes as in the above case.</li>
+</ul></li>
+</ul>
+</div>
+<div id="features" class="section level4">
+<h4>Features</h4>
+<ul>
+<li><a href="https://blog.clairvoyantsoft.com/eigen-decomposition-and-pca-c50f4ca15501">PCA</a></li>
+<li><a href="https://medium.com/@raj5287/effects-of-multi-collinearity-in-logistic-regression-svm-rf-af6766d91f1b">Multicollinearity</a>
+<ul>
+<li><a href="https://www.theanalysisfactor.com/eight-ways-to-detect-multicollinearity/">detect:</a></li>
+<li>variance inflation factor</li>
+<li>Coefficients have signs opposite to what you’d expect from theory</li>
+<li>high standard errors</li>
+</ul></li>
+</ul>
+</div>
+<div id="feature-selection" class="section level4">
+<h4>Feature Selection</h4>
+<ul>
+<li><a href="https://machinelearningmastery.com/feature-selection-with-real-and-categorical-data/">feature selection with real and categorical data</a></li>
+<li>Feature Selection: Select a subset of input features from the dataset.
+<ul>
+<li>Unsupervised: Do not use the target variable (e.g. remove redundant variables).
+<ul>
+<li>Correlation</li>
+</ul></li>
+<li>Supervised: Use the target variable (e.g. remove irrelevant variables).
+<ul>
+<li>Wrapper: Search for well-performing subsets of features.
+<ul>
+<li>Recursive Feature Elimination</li>
+</ul></li>
+<li>Filter: Select subsets of features based on their relationship with the target.
+<ul>
+<li>Statistical Methods (ANOVA, Chi^2, Correlation)</li>
+<li>Feature Importance Methods</li>
+</ul></li>
+<li>Intrinsic: Algorithms that perform automatic feature selection during training.
+<ul>
+<li>Decision Trees, LASSO</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Dimensionality Reduction: Project input data into a lower-dimensional feature space.</li>
+<li><a href="https://towardsdatascience.com/explaining-feature-importance-by-example-of-a-random-forest-d9166011959e">Feature Importance</a>
+<ul>
+<li>importance = the feature’s contribution to the decrease of the Gini impurity/entropy/variance (in regression case) - useful for random forest</li>
+<li>random shuffle a feature, throw it into the model, check the metric; the more decrease we observe in the metric, the more important the feature is</li>
+<li>like feature selection: drop one feature, see the change of the metric</li>
+</ul></li>
+</ul>
+</div>
+<div id="regularization" class="section level4">
+<h4>Regularization</h4>
+<ul>
+<li><a href="https://towardsdatascience.com/regularization-in-machine-learning-76441ddcf99a">regularization in machine learning</a></li>
+<li>LASSO (L1) vs Ridge (L2)
+<ul>
+<li>lasso:
+<ul>
+<li>easy to have zero coefficients</li>
+<li>which can be considered as a variable selection procedure</li>
+<li>which leads to a more sparse model (fewer features)</li>
+</ul></li>
+<li>l2:
+<ul>
+<li>can be used for finding outliers (? square will enlarge the effect of outliers)</li>
+</ul></li>
+</ul></li>
+<li><a href="https://www.datacamp.com/community/tutorials/tutorial-ridge-lasso-elastic-net">tutorial ridge lasso elastic net</a></li>
+</ul>
+</div>
+<div id="boosting-vs-bagging" class="section level4">
+<h4>Boosting vs Bagging</h4>
+<ul>
+<li><a href="https://quantdare.com/what-is-the-difference-between-bagging-and-boosting/">link-difference between bagging and boosting</a></li>
+<li>boosting:
+<ul>
+<li>build learners in a sequential way</li>
+<li>misclassification errors become weights so that the next learner can learn from the previous mistakes</li>
+<li>increase model performance, reduce errors</li>
+<li>overfitting might be a problem</li>
+</ul></li>
+<li>bagging:
+<ul>
+<li>build learners with bootstrap samples in a parallel way</li>
+<li>if all learners are not good, bagging cannot make it better</li>
+<li>can deal with the problem of overfitting</li>
+</ul></li>
+</ul>
+</div>
+<div id="outliers" class="section level4">
+<h4>Outliers</h4>
+<ul>
+<li><a href="https://cxl.com/blog/outliers/">outliers</a></li>
+</ul>
+</div>
+<div id="explain-to-non-tech" class="section level4">
+<h4>Explain to non-tech</h4>
+<ul>
+<li>Use visual content to explain technical information and processes</li>
+<li>Avoid technical terminology when possible</li>
+<li>Focus on impact and initiatives when explaining technical concepts
+<ul>
+<li>why we need it instead of how it works (of course, it also depends on the purpose of the talk)</li>
+</ul></li>
+</ul>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

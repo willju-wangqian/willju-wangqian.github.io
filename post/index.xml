@@ -6,7 +6,16 @@
     <description>Recent content in Posts on Wangqian Ju&#39;s website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 31 Mar 2022 22:03:48 -0500</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 31 Mar 2022 22:18:49 -0500</lastBuildDate><atom:link href="/post/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ML Review Summary</title>
+      <link>/2022/03/31/ml-review-summary/</link>
+      <pubDate>Thu, 31 Mar 2022 22:18:49 -0500</pubDate>
+      
+      <guid>/2022/03/31/ml-review-summary/</guid>
+      <description>Logistic Regression  Assumption  independent no multicollinearity binary observation for the dependent variable linear relationship between the log of odds and predictors  coefficients  log odds increases or odds multiplies by \(e^\beta\)    Random Forest  intro bagging and OOB:  bootstrap aggregation: train DTs with bootstrap samples (with replacement), aggregate by the majority vote out of bag  “random”  random rows: bagging random cols: use random features in DTs’ training  diversity: each DT is trained based on different training data and different features  diverse committee to cast votes relatively robust to multicollinearity  split criteria:  Gini impurity vs Entropy  best split: lowest Gini impurity, lowest entropy  Each node can compute this measurement; if the split decreases the measurement, then split.</description>
+    </item>
+    
     <item>
       <title>Include C code in R</title>
       <link>/2022/03/31/r-source-c/</link>
