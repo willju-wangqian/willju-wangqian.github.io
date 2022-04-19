@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.94.2" />
+
+
+<title>R project first then git - Wangqian Ju&#39;s website</title>
+<meta property="og:title" content="R project first then git - Wangqian Ju&#39;s website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/profile_cat.jpg"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/willju-wangqian">GitHub</a></li>
+    
+    <li><a href="/resume/">Resume/CV</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">1 min read</span>
+    
+
+    <h1 class="article-title">R project first then git</h1>
+
+    
+    <span class="article-date">2022-04-19</span>
+    
+
+    <div class="article-content">
+      
+
+
+<p>The primary goal of this blog is to remind me how to link my local R project to a newly created git repo. The content are mainly from the chapter 17 of the book <a href="https://happygitwithr.com/">Happy Git and GitHub for the useR</a> by <a href="https://github.com/jennybc/happy-git-with-r">Jennifer Bryan</a>.</p>
+<div id="step-1" class="section level4">
+<h4>Step 1</h4>
+<p>Get a local R project and its folder ready.</p>
+</div>
+<div id="step-2" class="section level4">
+<h4>Step 2</h4>
+<p>Create github repo</p>
+</div>
+<div id="step-3" class="section level4">
+<h4>Step 3</h4>
+<p>Connect the local R project folder to the remote github repo</p>
+<ul>
+<li><code>git init</code> or <code>usethis::use_git()</code></li>
+<li>make a commit</li>
+<li>in terminal <code>git remote add origin &lt;my-repo.git&gt;</code></li>
+<li>change the local branch name from <code>master</code> to <code>main</code> if applicable
+<ul>
+<li><code>git branch -m main</code></li>
+<li><a href="https://www.theserverside.com/feature/Why-GitHub-renamed-its-master-branch-to-main">Why Github renamed its master branch to main</a></li>
+</ul></li>
+</ul>
+<p>if error <code>fatal: refusing to merge unrelated histories</code>:</p>
+<ul>
+<li><code>git pull origin main --allow-unrelated-histories</code></li>
+<li>deal with any merge conflicts, then commit again</li>
+</ul>
+<p>push, make sure <code>working tree clean</code> when <code>git status</code></p>
+<ul>
+<li><code>git push --set-upstream origin main</code></li>
+</ul>
+</div>
+<div id="some-notes" class="section level4">
+<h4>Some notes</h4>
+<ul>
+<li>the name of the local folder doesn’t need to be the same as the name of the repo
+<ul>
+<li><code>git remote add origin &lt;my-repo.git&gt;</code> is able to connect them</li>
+<li>however, this might be the cause of the error <code>fatal: refusing to merge unrelated histories</code>. I’m not sure about this.</li>
+<li>you can read more from <a href="https://stackoverflow.com/questions/37937984/git-refusing-to-merge-unrelated-histories-on-rebase">this stackoverflow post</a>, which I didn’t read through :)</li>
+</ul></li>
+</ul>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+
+    
+  </body>
+</html>
+

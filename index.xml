@@ -6,7 +6,19 @@
     <description>Recent content on Wangqian Ju&#39;s website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 31 Mar 2022 22:18:49 -0500</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 19 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>R project first then git</title>
+      <link>/2022/04/19/r-project-first-then-git/</link>
+      <pubDate>Tue, 19 Apr 2022 00:00:00 +0000</pubDate>
+      
+      <guid>/2022/04/19/r-project-first-then-git/</guid>
+      <description>The primary goal of this blog is to remind me how to link my local R project to a newly created git repo. The content are mainly from the chapter 17 of the book Happy Git and GitHub for the useR by Jennifer Bryan.
+Step 1 Get a local R project and its folder ready.
+ Step 2 Create github repo
+ Step 3 Connect the local R project folder to the remote github repo</description>
+    </item>
+    
     <item>
       <title>ML Review Summary</title>
       <link>/2022/03/31/ml-review-summary/</link>
