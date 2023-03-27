@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>transformer on Wangqian Ju&#39;s website</title>
+    <link>/tags/transformer/</link>
+    <description>Recent content in transformer on Wangqian Ju&#39;s website</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 27 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/tags/transformer/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tutorials and Notes to Transformer</title>
+      <link>/2023/03/27/tutorials-and-notes-to-transformer/</link>
+      <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/2023/03/27/tutorials-and-notes-to-transformer/</guid>
+      <description>  The Annotated Transformer Transformer + Time Series in Pytorch How to run inference with a PyTorch time series Transformer A detailed guide to PyTorch’s nn.Transformer() module  </description>
+    </item>
+    
+  </channel>
+</rss>
