@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.94.2" />
+
+
+<title>ML Course Review for Neural Networks - Wangqian Ju&#39;s website</title>
+<meta property="og:title" content="ML Course Review for Neural Networks - Wangqian Ju&#39;s website">
+
+
+  <link href='/favicon.ico' rel='icon' type='image/x-icon'/>
+
+
+
+  
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/profile_cat.jpg"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+    <li><a href="https://github.com/willju-wangqian">GitHub</a></li>
+    
+    <li><a href="/resume/">Resume/CV</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">4 min read</span>
+    
+
+    <h1 class="article-title">ML Course Review for Neural Networks</h1>
+
+    
+    <span class="article-date">2022-04-27</span>
+    
+
+    <div class="article-content">
+      
+
+
+<p>deal with non-linear</p>
+<ul>
+<li>explicitly project features to higher dimensional space</li>
+<li>use svm with kernel function (implecitly)</li>
+</ul>
+<p>use <code>tanh(x)</code> instead of <code>sign(x)</code> to enable gradient descent</p>
+<p>patterns in back propagation</p>
+<ul>
+<li>add: gradient distributor</li>
+<li>max: gradient router</li>
+<li>mul: gradient switcher</li>
+</ul>
+<p>border pixels are less used without padding</p>
+<p>receptive field</p>
+<ul>
+<li>the region of the input sapce that affects a particular unit of the network</li>
+</ul>
+<p>pooling</p>
+<ul>
+<li>can reduce the dimension of the feature maps and save computations</li>
+<li>reduction operation like max and average</li>
+<li>number of trainable parameters is 0</li>
+<li>enlarge receptive fields</li>
+</ul>
+<p>why ReLU is popular</p>
+<ul>
+<li>no gradient vanishing</li>
+</ul>
+<p>attention layer</p>
+<ul>
+<li>different queries have different attentions</li>
+<li>ideas:
+<ul>
+<li>input: query vector <span class="math inline">\(q_j\)</span>, key vectors <span class="math inline">\(k_i\)</span>, and value vectors <span class="math inline">\(v_i\)</span></li>
+<li>similarity scores are computed using <span class="math inline">\(q_j \cdot k_i\)</span> (query and key)</li>
+<li>similarity scores are normalized (using <code>softmax</code>) to obtain weights</li>
+<li>weights are applied to value vectors –&gt; weighted sum</li>
+</ul></li>
+</ul>
+<p>limitation of convolution layer</p>
+<ul>
+<li>local features –&gt; larger range features needs to stack multiple layers</li>
+<li>over-fitting and inefficiency</li>
+<li>so we need global feature extractor</li>
+</ul>
+<p>compare different layers</p>
+<ul>
+<li>convolution vs fully-connected
+<ul>
+<li>conv is a special FC</li>
+<li>with sparse connection</li>
+<li>weights sharing</li>
+<li>conv applies constrains on weights to extract local features</li>
+</ul></li>
+<li>attention layer
+<ul>
+<li>weights are not trainable but are computed based on similarities</li>
+</ul></li>
+<li>summary:
+<ul>
+<li>all are matrix multiplication –&gt; linear combination of features</li>
+<li>FC: trained weights</li>
+<li>Conv: trained but constrained weights</li>
+<li>Attn: computed weights</li>
+</ul></li>
+<li>pooling: can perform non-linear operations</li>
+</ul>
+<p>CNN models</p>
+<ul>
+<li>Why can’t VGG go deep?
+<ul>
+<li>matrix multiplication causes gradient explosion</li>
+<li>successive convolutions</li>
+</ul></li>
+<li>ResNet
+<ul>
+<li>skip connections –&gt; gradient highway</li>
+<li>element-wise feature summation</li>
+</ul></li>
+<li>DenseNet
+<ul>
+<li>use feature concatenations</li>
+</ul></li>
+</ul>
+<p>transfer learning</p>
+<ul>
+<li>small datasets</li>
+<li>transfer?
+<ul>
+<li>well-trained feature extractors</li>
+<li>basic features like edges and shapes</li>
+</ul></li>
+<li>train on a large dataset</li>
+<li>fine-tune the weights using new (small) dataset</li>
+<li>why not transfer the FC?
+<ul>
+<li>the weights in the FC layer show how the model arranges and uses the extracted features, which should be different for different tasks.</li>
+</ul></li>
+</ul>
+<p>data augmentation and dropout</p>
+<p>idea of regularization</p>
+<p>data augmentation</p>
+<ul>
+<li>increase the size of the dataset</li>
+<li>limitation: the argmented data have the same labels</li>
+</ul>
+<p>dropout</p>
+<ul>
+<li>why it’s good
+<ul>
+<li>essentially using dropout trains a large ensemble of models</li>
+<li>robustness</li>
+</ul></li>
+<li>randomly drop neurons during training but don’t drop during testing</li>
+<li>one problem remains: the expectations of neurons are different for training and testing
+<ul>
+<li>if the dropout rate is <span class="math inline">\(p\)</span>, <span class="math inline">\(E[a]\)</span> is expectation at testing, then at training we have: <span class="math inline">\((1-p) E[a]\)</span></li>
+<li>how to fix? multiply by <span class="math inline">\(1-p\)</span> at test time</li>
+<li>why is this a problem?
+<ul>
+<li>for example the threshold obtained during training might not work at test time due to the difference in expectation</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>weights initialization and batch normalization</p>
+<p>weights initialization</p>
+<ul>
+<li>Xavier initialization
+<ul>
+<li>divide the variance of weights by the number of input features <span class="math inline">\(\frac{1}{fea_{in}}\)</span></li>
+</ul></li>
+<li>Kaiming initialization
+<ul>
+<li>if ReLU is used: since half of weights are dropped on average, use <span class="math inline">\(\frac{2}{fea_{in}}\)</span></li>
+</ul></li>
+</ul>
+<p>batch normalization</p>
+<ul>
+<li>during training
+<ul>
+<li>compute mini-batch mean and variance</li>
+<li>normalize</li>
+<li>scale and shift
+<ul>
+<li>scale and shift parameters</li>
+</ul></li>
+</ul></li>
+<li>at test time
+<ul>
+<li>fixed empirical mean and std during training are used</li>
+</ul></li>
+<li>why normalize then shift
+<ul>
+<li>the scale and shift parameters can then be shared by different batches</li>
+</ul></li>
+<li>benefits
+<ul>
+<li>improves gradient flow through the network</li>
+<li>allows higher learning rates</li>
+<li>reduces the strong dependence on initialization</li>
+</ul></li>
+<li>note that each input channel needs its own batch normalization layer
+<ul>
+<li>for <span class="math inline">\(C\)</span> input channels, we need <span class="math inline">\(C\)</span> batch normalization</li>
+</ul></li>
+</ul>
+<p>Graph Neural Networks</p>
+<p>note</p>
+<ul>
+<li>pixels have order on <span class="math inline">\(H\)</span> and <span class="math inline">\(W\)</span> dimensions but Not on <span class="math inline">\(C\)</span> dimension, so we cannot apply a 3D convolution layer on 2D input (<span class="math inline">\(H \times W \times C\)</span>)</li>
+<li>locality is important for convolution</li>
+<li>but data in graph don’t have locality information
+<ul>
+<li>there is no left or right for neighbors of a node</li>
+<li>difference between image and graph
+<ul>
+<li>number of neighboring nodes are fixed on image</li>
+<li>the neighboring nodes on image are ordered by their relative positions but not on graph</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>ML with graphs</p>
+<ul>
+<li>node classification</li>
+<li>link prediction</li>
+<li>graph classification</li>
+</ul>
+<p>graph convolutional networks</p>
+<p><span class="math inline">\(g_conv(H, A) = AHW\)</span></p>
+<ul>
+<li><span class="math inline">\(A\)</span> adjacent matrix</li>
+<li><span class="math inline">\(H\)</span> feature matrix
+<ul>
+<li><span class="math inline">\(AH\)</span> summation from neighboring nodes</li>
+</ul></li>
+<li><span class="math inline">\(W\)</span> weights
+<ul>
+<li>transformation from input features to output features</li>
+<li>or projection</li>
+</ul></li>
+</ul>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

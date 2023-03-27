@@ -6,7 +6,46 @@
     <description>Recent content on Wangqian Ju&#39;s website</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 19 Apr 2022 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 27 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Add a post with blogdown</title>
+      <link>/2023/03/27/add-a-post-with-blogdown/</link>
+      <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/2023/03/27/add-a-post-with-blogdown/</guid>
+      <description> Use the Addins to add a new post
+ Edit the post
+ Knit
+ blogdown::serve_site()
+ blogdown::build_site()
+ Check the Github repo on which the website is built
+  </description>
+    </item>
+    
+    <item>
+      <title>Submit an R package to CRAN </title>
+      <link>/2023/03/27/submit-an-r-package-to-cran/</link>
+      <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
+      
+      <guid>/2023/03/27/submit-an-r-package-to-cran/</guid>
+      <description>TOBE FINISHED</description>
+    </item>
+    
+    <item>
+      <title>ML Course Review for Neural Networks</title>
+      <link>/2022/04/27/ml-course-review-for-neural-networks/</link>
+      <pubDate>Wed, 27 Apr 2022 14:56:40 -0500</pubDate>
+      
+      <guid>/2022/04/27/ml-course-review-for-neural-networks/</guid>
+      <description>deal with non-linear
+ explicitly project features to higher dimensional space use svm with kernel function (implecitly)  use tanh(x) instead of sign(x) to enable gradient descent
+patterns in back propagation
+ add: gradient distributor max: gradient router mul: gradient switcher  border pixels are less used without padding
+receptive field
+ the region of the input sapce that affects a particular unit of the network  pooling
+ can reduce the dimension of the feature maps and save computations reduction operation like max and average number of trainable parameters is 0 enlarge receptive fields  why ReLU is popular</description>
+    </item>
+    
     <item>
       <title>R project first then git</title>
       <link>/2022/04/19/r-project-first-then-git/</link>
