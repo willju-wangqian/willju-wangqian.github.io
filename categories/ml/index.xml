@@ -8,12 +8,12 @@
     <language>en-us</language>
     <lastBuildDate>Mon, 27 Mar 2023 00:00:00 +0000</lastBuildDate><atom:link href="/categories/ml/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>Tutorials and Notes to Transformer</title>
-      <link>/2023/03/27/tutorials-and-notes-to-transformer/</link>
+      <title>Tutorials and Notes to Deep Learning</title>
+      <link>/2023/03/27/tutorials-and-notes-to-deep-learning/</link>
       <pubDate>Mon, 27 Mar 2023 00:00:00 +0000</pubDate>
       
-      <guid>/2023/03/27/tutorials-and-notes-to-transformer/</guid>
-      <description>  The Annotated Transformer Transformer + Time Series in Pytorch How to run inference with a PyTorch time series Transformer A detailed guide to PyTorch’s nn.Transformer() module  </description>
+      <guid>/2023/03/27/tutorials-and-notes-to-deep-learning/</guid>
+      <description> Transformer  The Annotated Transformer Transformer + Time Series in Pytorch How to run inference with a PyTorch time series Transformer A detailed guide to PyTorch’s nn.Transformer() module   Deep Learning Implementations  Githu - labml.ai Deep Learning Paper Implementations labml.ai Annotated PyTorch Paper Implementations   </description>
     </item>
     
     <item>
